@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -18,8 +19,10 @@ namespace SimpleApi
 			HttpConfiguration config = new HttpConfiguration();
 			config.Routes.MapHttpRoute(
 				name: "DefaultApi",
+				handler: HttpClientFactory.CreatePipeline(new HttpClientHandler(), new DelegatingHandler[] { new PassThroughHandler() }),
 				routeTemplate: "api/{controller}/{id}",
-				defaults: new { id = RouteParameter.Optional }
+				defaults: new { id = RouteParameter.Optional },
+				constraints: null
 			);
 
 			appBuilder.UseWebApi(config);
