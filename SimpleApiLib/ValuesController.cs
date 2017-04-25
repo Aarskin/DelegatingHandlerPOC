@@ -25,6 +25,14 @@ namespace SimpleApi
 		// POST api/values 
 		public void Post([FromBody]string value)
 		{
+			if (string.IsNullOrEmpty(value))
+			{
+				value = "Empty";
+			}
+			else
+			{
+				value = "NotEmpty";
+			}
 		}
 
 		// PUT api/values/5 

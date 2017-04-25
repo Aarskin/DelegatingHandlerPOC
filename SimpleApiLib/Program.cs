@@ -24,15 +24,35 @@ namespace SimpleApi
 		}
 
 		[Test]
-		public void Test1()
+		public void TestGet()
 		{
-			// Create HttpCient and make a request to api/values 
 			HttpClient client = new HttpClient();
+			HttpRequestMessage msq = new HttpRequestMessage()
+			{
+				Method = HttpMethod.Get,
+				RequestUri = new Uri(baseAddress + "api/values")
+			};
 
-			var response = client.GetAsync(baseAddress + "api/values").Result;
+			var response = client.SendAsync(msq).Result;
 
 			Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 		}
+
+		[Test]
+		public void TestPost()
+		{
+			HttpClient client = new HttpClient();
+			HttpRequestMessage msq = new HttpRequestMessage()
+			{
+				Method = HttpMethod.Post,
+				RequestUri = new Uri(baseAddress + "api/values")
+			};
+
+			var response = client.SendAsync(msq).Result;
+
+			Assert.AreEqual(HttpStatusCode.NoContent, response.StatusCode);
+		}
+
 
 		[TearDown]
 		public void TearDown()
